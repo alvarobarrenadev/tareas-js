@@ -115,6 +115,7 @@ if (encenderTV === "si") {
         break;
       default:
         alert("Selecciona una opción correcta");
+        break;
     }
     opcionesMandoTV = Number(prompt(menu));
   }
