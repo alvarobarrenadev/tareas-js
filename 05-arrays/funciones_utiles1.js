@@ -70,8 +70,8 @@ console.log(junto);
 let title = "Mi primer post sobre Javascript";
 let slug = title.split(" ").join("-");
 // Ejemplo de uso, crear slug para una página web con split y join o replaceAll
-console.log(slug);
-console.log(title.replaceAll(" ", "-"));
+console.log(slug); // Mi-primer-post-sobre-Javascript
+console.log(title.replaceAll(" ", "-")); // Mi-primer-post-sobre-Javascript
 
 // Ordenar con sort primitivos => Modifica el array originar
 // - Números
