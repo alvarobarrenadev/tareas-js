@@ -21,7 +21,7 @@ class Coche {
   }
   
   apagar() {
-    if (this.#velocidad !== 0) {
+    if (this.#velocidad === 0) {
       this.#encendido = false;
     } else {
       console.info(`El vehículo va a ${this.#velocidad} km/h, pon la velocidad a 0 km/h`);
