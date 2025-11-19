@@ -61,7 +61,7 @@ class Coche {
 const coche = new Coche("BMW", "M4", "1234ALV");
 console.log(coche.toString());
 
-coche.arrancar()
+coche.arrancar();
 coche.acelerar();
 coche.apagar();
 coche.desacelerar();
