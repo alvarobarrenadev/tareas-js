@@ -27,7 +27,7 @@ class Televisor {
 
   verSiguienteCanal() {
     if (this.#encendido) {
-      if (this.#canal === 100) {
+      if (this.#canal === this.#canales) {
         this.#canal = 0;
       } else {
         this.#canal += 1;
@@ -41,7 +41,7 @@ class Televisor {
   verAnteriorCanal() {
     if (this.#encendido) {
       if (this.#canal === 0) {
-        this.#canal = 100;
+        this.#canal = this.#canales;
       } else {
         this.#canal -= 1;
       }
@@ -53,7 +53,7 @@ class Televisor {
   
   cambiarCanal(canal) {
     if (this.#encendido) {
-      if (canal <= 100 && canal >= 0) {
+      if (canal <= this.#canales && canal >= 0) {
         this.#canal = canal;
         console.log(`Cambiado al canal: ${this.#canal}`);
       } else {
@@ -79,8 +79,8 @@ class Televisor {
 
   bajarVolumen() {
     if (this.#encendido) {
-      if (this.#volumen === 100) {
-        console.log("El volumen está al máximo")
+      if (this.#volumen === 0) {
+        console.log("El volumen está al mínimo")
       } else {
         this.#volumen -= 1;
         console.log(`Volumen bajado a ${this.#volumen}`);
@@ -91,13 +91,13 @@ class Televisor {
   }
 
   toString() {
-    console.log(`Televisor ${this.#marca}\n - Canales: ${this.#canales}\n - Canal actual: ${this.#canal}\n - Volumen actual: ${this.#volumen}`);
+    return `Televisor ${this.#marca}\n - Canales: ${this.#canales}\n - Canal actual: ${this.#canal}\n - Volumen actual: ${this.#volumen}`;
   }
 }
 
 const televisor = new Televisor("Samsung", 100);
 
-televisor.toString();
+console.log(televisor.toString());
 televisor.encender();
 televisor.verSiguienteCanal();
 televisor.verAnteriorCanal();
@@ -106,6 +106,6 @@ televisor.subirVolumen();
 televisor.subirVolumen();
 televisor.subirVolumen();
 televisor.cambiarCanal(34);
-televisor.verAnteriorCanal()
-televisor.apagar()
-televisor.toString();
+televisor.verAnteriorCanal();
+televisor.apagar();
+console.log(televisor.toString());
