@@ -1,5 +1,5 @@
 let divConId = document.getElementById("divimportante");
-console.log(Object.getPrototypeOf(pConId));
+console.log(Object.getPrototypeOf(divConId));
 
 const primerParrafo = document.createElement("p");
 primerParrafo.textContent = "Hola <strong>soy el contenido</strong> del párrafo";
