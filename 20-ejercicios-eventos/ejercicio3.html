@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 3</h1>
+    <p>Escribe un programa que permita ordenar los elementos de una lista desordenada.</p>
+    <p>Cada elemento debe tener un aspa en su extremo derecho para poder ser eliminado.</p>
+    <p>Además, al final habrá un botón para añadir un elemento.</p>
+    <p>El texto del nuevo elemento se le debe pedir al usuario por teclado.</p>
+    <hr />
+
+    <main>
+      <h2>Desayuno</h2>
+      <ul id="items">
+        <li>Huevos</li>
+        <li>Aceite</li>
+        <li>Jamón</li>
+        <li>Sal</li>
+        <li>Yogur</li>
+        <li>Nueces</li>
+        <li>Membrillo</li>
+      </ul>
+      <div id="actions">
+        <button id="sortBtn">Ordenar</button>
+        <button id="newElement">Nuevo ELemento</button>
+      </div>
+    </main>
+
+    <script>
+      let lista = document.getElementById('items');
+      let items = document.querySelectorAll('li');
+      let itemsText = [];
+      
+      for (let item of items) {
+        itemsText.push(item.childNodes[0].textContent);
+      }
+      
+      // Añadir botón de eliminar
+      for (let item of items) {
+        let newBtn = document.createElement("button");
+        newBtn.textContent = 'X';
+        item.appendChild(newBtn)
+        
+        newBtn.addEventListener('click', (e) => {
+          e.target.parentNode.remove();
+        });
+      }
+      
+      // Ordenar
+      let sortBtn = document.getElementById("sortBtn");
+      sortBtn.addEventListener('click', () => {
+        let itemsText = [];
+        items = lista.querySelectorAll('li');
+        for (let item of items) {
+          itemsText.push(item.childNodes[0].textContent);
+        }
+        
+        itemsText.sort();
+        lista.innerHTML = '';
+        itemsText.map(item => {
+          let newLi = document.createElement("li");
+          newLi.textContent = item;
+          
+          // Añadir botón de eliminar
+          let newBtn = document.createElement("button");
+          newBtn.textContent = 'X';
+          newBtn.addEventListener('click', (e) => {
+            e.target.parentNode.remove();
+          });
+          newLi.appendChild(newBtn);
+
+          // Añadir a la lista
+          lista.appendChild(newLi);
+        });
+      });
+
+      // Añadir elemento
+      let newElement = document.getElementById('newElement');
+      newElement.addEventListener('click', () => {
+        let texto = prompt('Introduce un elemento');
+        let newLi = document.createElement("li");
+        newLi.textContent = texto;
+
+        // Añadir botón de eliminar
+        let newBtn = document.createElement("button");
+        newBtn.textContent = 'X';
+        newBtn.addEventListener('click', (e) => {
+          e.target.parentNode.remove();
+        });
+        newLi.appendChild(newBtn);
+
+        // Añadir a la lista
+        lista.appendChild(newLi);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 6</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 6</h1>
+    <p>Crea una aplicación que contenga un párrafo con mucho texto.</p>
+    <p>Debajo del párrafo debe aparecer un botón por cada vocal.</p>
+    <p>Al pulsar sobre una vocal, esa vocal desaparecerá del texto.</p>
+    <hr />
+
+    <main>
+      <p id="pParaEliminar">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam nihil aspernatur perferendis voluptates optio laborum minima. Provident harum dolore doloremque placeat modi expedita molestiae consequatur beatae soluta cupiditate. Eaque, quaerat.</p>
+      <div class="buttons">
+        <button data-letter="a">A</button>
+        <button data-letter="e">E</button>
+        <button data-letter="i">I</button>
+        <button data-letter="o">O</button>
+        <button data-letter="u">U</button>
+      </div>
+    </main>
+
+    <script>
+      let buttons = document.querySelectorAll(".buttons button");
+      let pParaEliminar = document.getElementById("pParaEliminar");
+
+      for (let button of buttons) {
+        button.addEventListener("click", (e) => {
+          let letter = e.target.dataset.letter;
+          let actualText = pParaEliminar.textContent;
+          actualText = actualText.replaceAll(letter, '');
+          pParaEliminar.textContent = actualText;
+          e.target.disabled = true;
+        });
+      }
+    </script>
+  </body>
+</html>

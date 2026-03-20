@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 2</h1>
+    <p>Crea una aplicación cuyo código HTML contenga únicamente una caja roja.</p>
+    <p>Cada vez que el usuario pulse algunas de las teclas de los cursores (flecha arriba, flecha abajo, flecha a derecha, flecha a izquierda).</p>
+    <p>La caja debe desplazarse 10px en la dirección establecida por el cursor</p>
+    <hr />
+
+    <main>
+      <div id="boxEj2"></div>
+    </main>
+
+    <script>
+      let boxEj2 = document.getElementById("boxEj2");
+      let currentTop;
+      let currentLeft;
+      let newTop;
+      let newLeft;
+
+      document.body.addEventListener ('keydown', (e) => {
+        switch (e.key) {
+          case 'ArrowUp':
+            currentTop = boxEj2.style.top ? parseInt(boxEj2.style.top) : 0;
+            console.log(`El usuario ha pulsado la tecla de arriba.\nPosición actual: ${currentTop} px`);
+            newTop = currentTop - 10;
+            boxEj2.style.top = `${newTop}px`;
+            break;
+          case 'ArrowDown':
+            currentTop = boxEj2.style.top ? parseInt(boxEj2.style.top) : 0;
+            console.log(`El usuario ha pulsado la tecla de abajo.\nPosición actual: ${currentTop} px`);
+            newTop = currentTop + 10;
+            boxEj2.style.top = `${newTop}px`;
+            break;
+          case 'ArrowLeft':
+            currentLeft = boxEj2.style.left ? parseInt(boxEj2.style.left) : 0;
+            console.log(`El usuario ha pulsado la tecla de la izquierda.\nPosición actual: ${currentLeft} px`);
+            newLeft = currentLeft - 10;
+            boxEj2.style.left = `${newLeft}px`;
+            break;
+          case 'ArrowRight':
+            currentLeft = boxEj2.style.left ? parseInt(boxEj2.style.left) : 0;
+            console.log(`El usuario ha pulsado la tecla de la derecha.\nPosición actual: ${currentLeft} px`);
+            newLeft = currentLeft + 10;
+            boxEj2.style.left = `${newLeft}px`;
+            break;
+        }
+      })
+    </script>
+  </body>
+</html>

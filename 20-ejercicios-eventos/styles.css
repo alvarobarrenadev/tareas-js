@@ -1,0 +1,114 @@
+/* General styles */
+body {
+  color: white;
+  background-color: #111;
+}
+
+a {
+  color: yellow;
+}
+
+.homeList li{
+  margin-bottom: 0.3rem;
+}
+
+hr {
+  color: white;
+}
+
+/* Exercise 2 */
+#boxEj2 {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  background-color: red;
+  top: 0px;
+  margin: 0 auto;
+}
+
+/* Exercise 3 */
+#items li {
+  display: flex;
+  gap: .5rem;
+}
+
+#items button {
+  background-color: transparent;
+  border: 0;
+  color: red;
+  font-size: 1rem;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+/* Exercise 4 */
+#dynamicP {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  gap: 0.5rem;
+}
+
+/* Exercise 5 */
+#boxEj5 {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: .5s all ease;
+}
+
+/* Exercise 7 */
+.boxesEj7 .box {
+  border: 1px solid white;
+  width: 10px;
+  height: 40px;
+  display: flex;
+  place-items: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.boxesEj7 .green {
+  background-color: green;
+  border-color: green;
+}
+
+.boxesEj7 .red {
+  background-color: red;
+  border-color: red;
+}
+
+/* Ejercicio 8 */
+#game {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.box {
+  width: 100%;
+  height: 60px;
+  border: 1px solid white;
+  background-color: black;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.box.selected {
+  outline: 3px solid #2d7ff9;
+}
+
+.box.drag-over {
+  outline: 3px solid #22aa55;
+}
+
+.box.matched {
+  cursor: default;
+  border: 2px solid #0a7a2f;
+}

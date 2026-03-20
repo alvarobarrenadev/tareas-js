@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 7</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 7</h1>
+    <p>Escribe un programa para simular la velocidad de pulsación de dos teclas.</p>
+    <p>En pantalla aparecerán dos cajas, una verde y otra roja, una debajo de otra.</p>
+    <p>El alto de cada caja será de 40 px y el ancho inicial de 10 px cada una.</p>
+    <p>La primera caja incrementará su ancho 5px cada vez que se pulse la tecla [a].</p>
+    <p>La segunda caja hará lo mismo cuando se pulse la tecla [ñ].</p>
+    <p>El juego termina cuando una de las cajas llega a 500 px de ancho.</p>
+    <p>En ese momento deben desactivarse los eventos de ambas teclas y mostrarse un mensaje bajo las cajas que ponga GANA VERDE o GANA ROJO.</p>
+    <p>Se trata de calcular con qué mano eres capaz de realizar más pulsaciones.</p>
+    <hr />
+
+    <main>
+      <div class="boxesEj7">
+        <div class="box green" data-letter="a">A</div>
+        <div class="box red" data-letter="ñ">Ñ</div>
+      </div>
+      <div id="result">Todavía no ha ganado nadie</div>
+    </main>
+
+    <script>
+      const presionarTecla = (e) => {
+        const letter = e.key.toLowerCase();
+        const box = document.querySelector(`[data-letter="${letter}"]`);
+
+        if (!box) return;
+
+        let width = box.offsetWidth + 5;
+        box.style.width = `${width}px`;
+
+        if (width >= 500) {
+          if (box.classList.contains("green")) {
+            document.getElementById("result").textContent = "GANA VERDE";
+          } else {
+            document.getElementById("result").textContent = "GANA ROJO";
+          }
+
+          document.removeEventListener("keydown", presionarTecla);
+        }
+      };
+
+      document.addEventListener("keydown", presionarTecla);
+    </script>
+  </body>
+</html>

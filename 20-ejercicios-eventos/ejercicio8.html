@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 8</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 8</h1>
+
+    <p>Juguemos a adivinar las parejas. Debes distribuir en la página una cuadrícula de 6 x 5 cajas.</p>
+    <p>De las 30 cajas habrá 15 distintas. Cada par de cajas será de un color distinto.</p>
+    <p>Inicialmente todas las cajas aparecerán negras.</p>
+    <p>Cuando el usuario pinche sobre una caja, se revelará su auténtico color.</p>
+    <p>En ese momento debes arrastrar la caja al lugar donde creas que se encuentra su pareja.</p>
+    <p>Si aciertas, ambas cajas permanecerán boca arriba y ya no se podrá interactuar con ellas.</p>
+    <p>Si fallas, las dos cajas volverán a su estado inicial.</p>
+    <p>El programa debe detectar cuándo están todas las cajas emparejadas y cuánto tiempo has tardado en resolverlo.</p>
+
+    <hr />
+
+    <main>
+      <h2><span id="timer">00:00:00</span></h2>
+      <p id="status">Haz clic en una caja para empezar.</p>
+      <section id="game"></section>
+    </main>
+
+    <script>
+      const cols = 6;
+      const rows = 5;
+      const totalBoxes = cols * rows;
+      const totalPairs = totalBoxes / 2;
+
+      const game = document.getElementById("game");
+      const timerEl = document.getElementById("timer");
+      const statusEl = document.getElementById("status");
+
+      let selectedBox = null;
+      let lockBoard = false;
+      let matchedPairs = 0;
+
+      let timerStarted = false;
+      let timerInterval = null;
+      let startTime = 0;
+
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function generateDistinctColors(total) {
+        const colors = [];
+        for (let i = 0; i < total; i++) {
+          const hue = Math.round((360 / total) * i);
+          colors.push(`hsl(${hue}, 75%, 55%)`);
+        }
+        return colors;
+      }
+
+      function formatTime(ms) {
+        const centiseconds = Math.floor(ms / 10);
+        const minutes = Math.floor(centiseconds / 6000);
+        const seconds = Math.floor((centiseconds % 6000) / 100);
+        const cs = centiseconds % 100;
+
+        return (
+          String(minutes).padStart(2, "0") +
+          ":" +
+          String(seconds).padStart(2, "0") +
+          ":" +
+          String(cs).padStart(2, "0")
+        );
+      }
+
+      function startTimer() {
+        if (timerStarted) return;
+
+        timerStarted = true;
+        startTime = Date.now();
+
+        timerInterval = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          timerEl.textContent = formatTime(elapsed);
+        }, 10);
+      }
+
+      function stopTimer() {
+        clearInterval(timerInterval);
+      }
+
+      function revealBox(box) {
+        box.style.backgroundColor = box.dataset.color;
+        box.dataset.open = "1";
+      }
+
+      function hideBox(box) {
+        box.style.backgroundColor = "black";
+        box.dataset.open = "0";
+        box.classList.remove("selected", "drag-over");
+      }
+
+      function markMatched(box) {
+        box.dataset.matched = "1";
+        box.dataset.open = "0";
+        box.draggable = false;
+        box.classList.remove("selected", "drag-over");
+        box.classList.add("matched");
+        box.style.backgroundColor = box.dataset.color;
+      }
+
+      function clearSelection() {
+        if (selectedBox && selectedBox.dataset.matched !== "1") {
+          selectedBox.classList.remove("selected");
+          selectedBox.draggable = false;
+        }
+        selectedBox = null;
+      }
+
+      function finishGame() {
+        stopTimer();
+        statusEl.textContent = `Has terminado en ${timerEl.textContent}`;
+        alert(`¡Has emparejado todas las cajas en ${timerEl.textContent}!`);
+      }
+
+      function compareBoxes(box1, box2) {
+        lockBoard = true;
+        revealBox(box2);
+
+        if (box1.dataset.color === box2.dataset.color) {
+          markMatched(box1);
+          markMatched(box2);
+          matchedPairs++;
+          clearSelection();
+          lockBoard = false;
+
+          if (matchedPairs === totalPairs) {
+            finishGame();
+          } else {
+            statusEl.textContent = `¡Pareja correcta! Llevas ${matchedPairs} de ${totalPairs}.`;
+          }
+        } else {
+          statusEl.textContent = "No es pareja.";
+
+          setTimeout(() => {
+            hideBox(box1);
+            hideBox(box2);
+            clearSelection();
+            lockBoard = false;
+          }, 700);
+        }
+      }
+
+      function handleClick(e) {
+        const box = e.currentTarget;
+
+        if (lockBoard) return;
+        if (box.dataset.matched === "1") return;
+
+        startTimer();
+
+        if (!selectedBox) {
+          revealBox(box);
+          selectedBox = box;
+          box.classList.add("selected");
+          box.draggable = true;
+          statusEl.textContent = "Ahora arrastra esa caja sobre otra.";
+          return;
+        }
+
+        if (box === selectedBox) {
+          hideBox(box);
+          clearSelection();
+          statusEl.textContent = "Selección cancelada.";
+          return;
+        }
+
+        compareBoxes(selectedBox, box);
+      }
+
+      function handleDragStart(e) {
+        const box = e.currentTarget;
+
+        if (lockBoard || box !== selectedBox) {
+          e.preventDefault();
+          return;
+        }
+
+        e.dataTransfer.setData("text/plain", box.dataset.id);
+      }
+
+      function handleDragOver(e) {
+        const box = e.currentTarget;
+
+        if (!selectedBox) return;
+        if (lockBoard) return;
+        if (box === selectedBox) return;
+        if (box.dataset.matched === "1") return;
+
+        e.preventDefault();
+        box.classList.add("drag-over");
+      }
+
+      function handleDragLeave(e) {
+        e.currentTarget.classList.remove("drag-over");
+      }
+
+      function handleDrop(e) {
+        e.preventDefault();
+
+        const targetBox = e.currentTarget;
+        targetBox.classList.remove("drag-over");
+
+        if (!selectedBox) return;
+        if (lockBoard) return;
+        if (targetBox === selectedBox) return;
+        if (targetBox.dataset.matched === "1") return;
+
+        startTimer();
+        compareBoxes(selectedBox, targetBox);
+      }
+
+      function createBox(color, id) {
+        const box = document.createElement("div");
+        box.classList.add("box");
+        box.dataset.color = color;
+        box.dataset.id = id;
+        box.dataset.open = "0";
+        box.dataset.matched = "0";
+        box.draggable = false;
+
+        box.addEventListener("click", handleClick);
+        box.addEventListener("dragstart", handleDragStart);
+        box.addEventListener("dragover", handleDragOver);
+        box.addEventListener("dragleave", handleDragLeave);
+        box.addEventListener("drop", handleDrop);
+
+        return box;
+      }
+
+      function initGame() {
+        const colors = generateDistinctColors(totalPairs);
+        const deck = shuffle([...colors, ...colors]);
+
+        game.innerHTML = "";
+        matchedPairs = 0;
+        selectedBox = null;
+        lockBoard = false;
+        timerStarted = false;
+        stopTimer();
+        timerEl.textContent = "00:00:00";
+        statusEl.textContent = "Haz clic en una caja para empezar.";
+
+        deck.forEach((color, index) => {
+          const box = createBox(color, index);
+          game.appendChild(box);
+        });
+      }
+
+      initGame();
+    </script>
+  </body>
+</html>

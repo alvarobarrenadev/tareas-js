@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a href="index.html" style="text-decoration: none;">&larr; Volver</a>
+    <h1>Ejercicio 5</h1>
+    <p>Crea una rutina que no permita que el ratón se coloque encima de una caja roja de 100 x 100 px.</p>
+    <p>Cada vez que el ratón intente colocarse encima, la posición de la caja debe cambiar aleatoriamente por la página.</p>
+    <hr />
+
+    <main>
+      <h2>Caja loca</h2>
+      <p id="boxEj5"></p>
+    </main>
+
+    <script>
+      let box = document.getElementById('boxEj5');
+
+      box.addEventListener('mouseover', () => {
+        let maxWidth = window.outerWidth - 100;
+        let maxHeight = window.outerHeight - 500;
+
+        let randLeft = Math.floor(Math.random() * maxWidth);
+        let randTop = Math.floor(Math.random() * maxHeight);
+        box.style.top = `${randTop}px`;
+        box.style.left = `${randLeft}px`;
+      })
+    </script>
+  </body>
+</html>
