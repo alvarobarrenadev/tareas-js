@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de las parejas</title>
+    <script type="module" crossorigin src="./assets/main-D87kmY57.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/main-BO_wPrfw.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">Memoria visual</p>
+        <h1>Juego de las parejas</h1>
+        <p class="intro">
+          Elige el tamaño del tablero, descubre colores ocultos y encuentra
+          todas las combinaciones en el menor tiempo posible.
+        </p>
+      </section>
+
+      <section class="game-shell">
+        <div class="game-toolbar">
+          <article class="stat-card">
+            <p class="stat-label">Tiempo</p>
+            <p class="stat-value" id="timer">00:00:00</p>
+          </article>
+
+          <article class="stat-card stat-card-wide">
+            <p class="stat-label">Estado</p>
+            <p class="stat-value stat-message" id="status">
+              Haz clic en una caja para empezar.
+            </p>
+          </article>
+
+          <button id="reset" type="button">Nuevo tablero</button>
+        </div>
+
+        <section
+          id="game"
+          aria-label="Tablero de juego de las parejas"
+        ></section>
+      </section>
+    </main>
+  </body>
+</html>
